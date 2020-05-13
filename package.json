@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fullcalendar/bootstrap": "^4.4.0",
     "@fullcalendar/core": "^4.4.0",
     "@fullcalendar/daygrid": "^4.4.0",
     "@fullcalendar/list": "^4.4.0",
@@ -16,6 +17,7 @@
     "@types/node": "^12.12.38",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
+    "bootstrap": "^4.5.0",
     "moment": "^2.25.3",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",

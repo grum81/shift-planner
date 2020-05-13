@@ -3,6 +3,7 @@ import FullCalendar from '@fullcalendar/react'
 import { EventInput } from '@fullcalendar/core'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import rrulePlugin from '@fullcalendar/rrule'
+import bootstrapPlugin from '@fullcalendar/bootstrap'
 import moment from 'moment'
 
 import './App.scss';
@@ -107,25 +108,38 @@ export default class App extends Component<{}, AppState> {
 
   render() {
     return (
-      <div className="container"> 
-        <div className="top">
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Shift Pattern Start: 
-              <input id="shiftStartDate" type="date" value={this.state.startDate} onChange={this.handleChange} />
-            </label> 
-            <input type="submit" value="Update" />          
-          </form>
-        </div>  
-        <div className="calendar"> 
-          <FullCalendar 
-            defaultView="dayGridMonth" 
-            plugins={[ dayGridPlugin, rrulePlugin ]} 
-            firstDay={this.state.firstDayOfWeek}
-            events={this.state.events}
-          />
+      <>
+      <nav className="navbar navbar-light bg-light border-bottom shadow-sm">
+        <div className="container">
+          <span className="navbar-brand">
+            <img src="/helicopter.svg" width="90" height="65" className="d-inline-block align-top" alt="" loading="lazy" />
+            Shift Planner
+          </span>
         </div>
-      </div>
+      </nav>
+        <div className="calendar-container">
+          <div className="calendar">
+            <FullCalendar 
+              defaultView="dayGridMonth" 
+              plugins={[ dayGridPlugin, rrulePlugin, bootstrapPlugin ]} 
+              firstDay={this.state.firstDayOfWeek}
+              events={this.state.events}
+              eventTextColor="white"
+            />
+          </div>
+          <div className="bottom">
+            <form className="form-inline" onSubmit={this.handleSubmit}>
+              <div className="form-group mb-2">
+                <label htmlFor="shiftStartDate">Shift Pattern Start Date:</label>
+              </div>
+              <div className="form-group mx-sm-3 mb-2">
+                <input id="shiftStartDate" type="date" className="form-control form-control-sm" value={this.state.startDate} onChange={this.handleChange} />
+              </div>
+              <button type="submit" className="btn btn-outline-dark btn-sm mb-2">Update</button>
+            </form>
+          </div>
+        </div>
+      </>
     )
   }
 
