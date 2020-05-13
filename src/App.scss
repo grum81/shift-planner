@@ -1,0 +1,33 @@
+@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/daygrid/main.css';
+
+.container {
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 14px;
+  }
+  
+  .top {
+    margin: 0 auto 2em;
+    max-width: 900px;
+  }
+  
+  .calendar {
+    margin: 0 auto;
+    max-width: 900px;
+  }
+
+  .fc-event-home {
+    border: 1px solid #00ff00;
+  }
+  
+  .fc-event-home {
+    background-color: #00ff00;
+  }
+
+  .fc-event-offshore {
+    border: 1px solid #ff0000;
+  }
+  
+  .fc-event-offshore {
+    background-color: #ff0000;
+  }
