@@ -36,3 +36,8 @@
 .navbar-brand {
   font-size: 2.5rem !important;
 }
+
+.fc-day-grid-container.fc-scroller {
+  height: auto!important;
+  overflow-y: auto;
+}

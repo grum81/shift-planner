@@ -130,7 +130,7 @@ export default class App extends Component<{}, AppState> {
           <div className="bottom">
             <form className="form-inline" onSubmit={this.handleSubmit}>
               <div className="form-group mb-2">
-                <label htmlFor="shiftStartDate">Shift Pattern Start Date:</label>
+                <label htmlFor="shiftStartDate">Start Date:</label>
               </div>
               <div className="form-group mx-sm-3 mb-2">
                 <input id="shiftStartDate" type="date" className="form-control form-control-sm" value={this.state.startDate} onChange={this.handleChange} />
