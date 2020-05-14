@@ -42,9 +42,8 @@
   overflow-y: auto;
 }
 
-input[type="date"]
+.date-input-fix
 {
-    display:block;
-    -webkit-appearance: textfield;
-    -moz-appearance: textfield;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
