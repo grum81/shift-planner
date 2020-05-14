@@ -128,14 +128,16 @@ export default class App extends Component<{}, AppState> {
             />
           </div>
           <div className="bottom">
-            <form className="form-inline" onSubmit={this.handleSubmit}>
-              <div className="form-group mb-2">
-                <label htmlFor="shiftStartDate">Start Date:</label>
+            <form className="form-row align-items-center" onSubmit={this.handleSubmit}>
+              <div className="col-auto">
+                <label htmlFor="shiftStartDate" className="form-label">Start Date:</label>
               </div>
-              <div className="form-group mx-sm-3 mb-2 date-input-container">
-                <input id="shiftStartDate" type="date" className="form-control form-control-sm date-input" value={this.state.startDate} onChange={this.handleChange} />
+              <div className="col-auto">
+                <input id="shiftStartDate" type="date" className="form-control form-control-sm" value={this.state.startDate} onChange={this.handleChange} />
               </div>
-              <button type="submit" className="btn btn-outline-dark btn-sm mb-2">Update</button>
+              <div className="col-auto">
+                <button type="submit" className="btn btn-outline-dark btn-sm mb-2">Update</button>
+              </div>
             </form>
           </div>
         </div>
