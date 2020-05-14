@@ -41,3 +41,10 @@
   height: auto!important;
   overflow-y: auto;
 }
+
+input[type="date"]
+{
+    display:block;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+}
