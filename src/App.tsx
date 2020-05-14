@@ -132,8 +132,8 @@ export default class App extends Component<{}, AppState> {
               <div className="form-group mb-2">
                 <label htmlFor="shiftStartDate">Start Date:</label>
               </div>
-              <div className="form-group mx-sm-3 mb-2">
-                <input id="shiftStartDate" type="date" className="form-control form-control-sm" value={this.state.startDate} onChange={this.handleChange} />
+              <div className="form-group mx-sm-3 mb-2 date-input-container">
+                <input id="shiftStartDate" type="date" className="form-control form-control-sm date-input" value={this.state.startDate} onChange={this.handleChange} />
               </div>
               <button type="submit" className="btn btn-outline-dark btn-sm mb-2">Update</button>
             </form>
