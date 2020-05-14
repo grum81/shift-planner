@@ -11,7 +11,8 @@ import './App.scss';
 interface AppState {
   firstDayOfWeek: number,
   events: EventInput[],
-  startDate: string
+  startDate: string,
+  pattern: string
 }
 
 export default class App extends Component<{}, AppState> {
@@ -21,70 +22,123 @@ export default class App extends Component<{}, AppState> {
   constructor(props: {}) {
     super(props);
     
-    this.handleChange = this.handleChange.bind(this);
+    this.handleStartDateChange = this.handleStartDateChange.bind(this);
+    this.handlePatternChange = this.handlePatternChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
     const lsStartDate = localStorage.getItem('startDate');
+    const lsPattern = localStorage.getItem('pattern');
     const lsEvents = localStorage.getItem('events');
 
     this.state = {
       firstDayOfWeek: 1,
       events: lsEvents ? JSON.parse(lsEvents) : [],
-      startDate: lsStartDate ? lsStartDate : ''
+      startDate: lsStartDate ? lsStartDate : '',
+      pattern: lsPattern ? lsPattern : '3534'
     }
   }
 
-  populateEvents(startDate: string) {
+  populateEvents(startDate: string, pattern: string) {
     const date = moment(startDate, 'YYYY-MM-DD');
 
     const shiftEvents: EventInput[] = [];
 
+    console.log('Pattern:' + pattern);
+
     if (date.isValid()) {
-    console.log(date.format('YYYY-MM-DD'));
-        
-      shiftEvents.push({
-          title: 'Offshore', 
-          allDay: true,
-          color: 'red',
-          rrule: {
-            freq: 'weekly',
-            interval: 15,
-            dtstart: date.toISOString(),
+
+      if (pattern === '3435') {        
+        shiftEvents.push(
+          {
+            title: 'Offshore', 
+            allDay: true,
+            color: 'red',
+            rrule: {
+              freq: 'weekly',
+              interval: 15,
+              dtstart: date.toISOString(),
+            },
+            duration: { weeks: 3 }
+          },{
+            title: 'Home (4 weeks)', 
+            allDay: true,
+            color: 'green',
+            rrule: {
+              freq: 'weekly',
+              interval: 15,
+              dtstart: date.add(3, 'w').toISOString(),
+            },
+            duration: { weeks: 4 }
           },
-          duration: { weeks: 3 }
-        },{
-          title: 'Home (4 weeks)', 
-          allDay: true,
-          color: 'green',
-          rrule: {
-            freq: 'weekly',
-            interval: 15,
-            dtstart: date.add(3, 'w').toISOString(),
+          {
+            title: 'Offshore', 
+            allDay: true,
+            color: 'red',
+            rrule: {
+              freq: 'weekly',
+              interval: 15,
+              dtstart: date.add(4, 'w').toISOString(),
+            },
+            duration: { weeks: 3 }
+          },{
+            title: 'Home (5 weeks)', 
+            allDay: true,
+            color: 'green',
+            rrule: {
+              freq: 'weekly',
+              interval: 15,
+              dtstart: date.add(3, 'w').toISOString(),
+            },
+            duration: { weeks: 5 }
+          }
+        );
+      } else if (pattern === '3534') {        
+        shiftEvents.push(
+          {
+            title: 'Offshore', 
+            allDay: true,
+            color: 'red',
+            rrule: {
+              freq: 'weekly',
+              interval: 15,
+              dtstart: date.toISOString(),
+            },
+            duration: { weeks: 3 }
+          },{
+            title: 'Home (5 weeks)', 
+            allDay: true,
+            color: 'green',
+            rrule: {
+              freq: 'weekly',
+              interval: 15,
+              dtstart: date.add(3, 'w').toISOString(),
+            },
+            duration: { weeks: 5 }
           },
-          duration: { weeks: 4 }
-        },
-        {
-          title: 'Offshore', 
-          allDay: true,
-          color: 'red',
-          rrule: {
-            freq: 'weekly',
-            interval: 15,
-            dtstart: date.add(4, 'w').toISOString(),
-          },
-          duration: { weeks: 3 }
-        },{
-          title: 'Home (5 weeks)', 
-          allDay: true,
-          color: 'green',
-          rrule: {
-            freq: 'weekly',
-            interval: 15,
-            dtstart: date.add(3, 'w').toISOString(),
-          },
-          duration: { weeks: 5 }
-        });
-    }
+          {
+            title: 'Offshore', 
+            allDay: true,
+            color: 'red',
+            rrule: {
+              freq: 'weekly',
+              interval: 15,
+              dtstart: date.add(5, 'w').toISOString(),
+            },
+            duration: { weeks: 3 }
+          },{
+            title: 'Home (4 weeks)', 
+            allDay: true,
+            color: 'green',
+            rrule: {
+              freq: 'weekly',
+              interval: 15,
+              dtstart: date.add(3, 'w').toISOString(),
+            },
+            duration: { weeks: 4 }
+          }
+        );
+      }
+  }
 
     this.setState({
       ...this.state,
@@ -92,18 +146,24 @@ export default class App extends Component<{}, AppState> {
     });
     
     localStorage.setItem('startDate', startDate);
+    localStorage.setItem('pattern', pattern);
     localStorage.setItem('events', JSON.stringify(shiftEvents))
   }
 
-  handleChange(event: ChangeEvent<HTMLInputElement>) {   
+  handleStartDateChange(event: ChangeEvent<HTMLInputElement>) {   
     const startDate = event.target.value;
     this.setState({ ...this.state, startDate: startDate });
+  }
+
+  handlePatternChange(event: ChangeEvent<HTMLSelectElement>) {   
+    const pattern = event.target.value;
+    this.setState({ ...this.state, pattern: pattern });
   }
 
   handleSubmit(event: FormEvent) {
     event.preventDefault();
 
-    this.populateEvents(this.state.startDate)
+    this.populateEvents(this.state.startDate, this.state.pattern)
   }
 
   render() {
@@ -133,7 +193,14 @@ export default class App extends Component<{}, AppState> {
                 <label htmlFor="shiftStartDate" className="form-label">Start Date:</label>
               </div>
               <div className="col-auto">
-                <input id="shiftStartDate" type="date" className="form-control form-control-sm mb-2 date-input" value={this.state.startDate} onChange={this.handleChange} />
+                <input id="shiftStartDate" type="date" className="form-control form-control-sm mb-2 date-input" value={this.state.startDate} onChange={this.handleStartDateChange} />
+              </div>
+              <div className="col-auto">                
+                <label htmlFor="shiftPattern" className="sr-only">Example select</label>
+                <select className="form-control form-control-sm mb-2" id="shiftPattern" value={this.state.pattern} onChange={this.handlePatternChange}>
+                  <option value="3534">3/5, 3/4</option>
+                  <option value="3435">3/4, 3/5</option>
+                </select>
               </div>
               <div className="col-auto">
                 <button type="submit" className="btn btn-outline-dark btn-sm mb-2">Update</button>
