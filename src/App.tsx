@@ -4,6 +4,7 @@ import { EventInput } from '@fullcalendar/core'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import rrulePlugin from '@fullcalendar/rrule'
 import bootstrapPlugin from '@fullcalendar/bootstrap'
+import ReactGA from 'react-ga'
 import moment from 'moment'
 
 import './App.scss';
@@ -14,6 +15,16 @@ interface AppState {
   startDate: string,
   pattern: string
 }
+
+
+export const initGA = () => {
+  ReactGA.initialize('UA-166908449-1');
+  ReactGA.pageview(window.location.pathname + window.location.search);
+  console.log(window.location.pathname + window.location.search);
+}
+
+ReactGA.initialize('UA-166908449-1');
+ReactGA.pageview('/');
 
 export default class App extends Component<{}, AppState> {
 
@@ -163,7 +174,13 @@ export default class App extends Component<{}, AppState> {
   handleSubmit(event: FormEvent) {
     event.preventDefault();
 
-    this.populateEvents(this.state.startDate, this.state.pattern)
+    this.populateEvents(this.state.startDate, this.state.pattern);
+
+    ReactGA.event({
+      category: 'User',
+      action: 'set rota',
+      label: `date: ${this.state.startDate}, pattern: ${this.state.pattern}`
+    });
   }
 
   render() {
